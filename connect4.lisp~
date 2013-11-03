@@ -7,7 +7,7 @@
 )
 
 (defun player-1-move (a b)
-    (setf (aref board a b) "X")   
+    (setf (aref board a b) "O")   
 )
 
 (defun player-2-move (a b)
