@@ -36,11 +36,11 @@
 (loop
 (print board)
 (format t "~%")
-(format t "Player 1 Input: ~%")
+(format t "Player 1 Input: ")
 (player-1-move (read))
 (print board)
 (format t "~%")
-(format t "Player 2 Input: ~%")
+(format t "Player 2 Input: ")
 (player-2-move (read))
 ;;;(screen:clear-window (screen:make-window))
 )
