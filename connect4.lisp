@@ -44,15 +44,43 @@
 
 )
 
+;; Sanitizes the player's input to make sure they
+;; play a move that is a number in the interval [0, 6]
+;; and the column they wish to play in is not full.
+(defun human-select ()
+	(let ((move -1) (check-move 0))
+		(loop while (= move -1) do
+			(setf check-move (read))
+			(cond
+				((not (is-valid-move check-move)) 
+					(format t "Invalid move; expected a number in the interval [0, 6], got: ~a.~%Try again: " check-move))
+				((not (can-play-move check-move))
+					(format t "Invalid move; you played in column ~a but it is full.~%Try again: " check-move))
+				(t
+					(setf move check-move))))
+		(return-from human-select move)))
+
+;; The easy AI selects a move from the interval [0, 6]
+;; at random and returns that move.
+(defun easy-ai-select ()
+	(let ((move -1) (rand-move 0))
+		(loop while (= move -1) do
+			(setf rand-move (random 7))
+			(if (can-play-move rand-move)
+				(setf move rand-move)))
+		(return-from easy-ai-select move)))
+
 (make-board)
-(loop
-(print board)
-(format t "~%")
-(format t "Player 1 Input: ")
-(player-1-move (read))
-(print board)
-(format t "~%")
-(format t "Player 2 Input: ")
-(player-2-move (read))
-;;;(screen:clear-window (screen:make-window))
-)
+(setf total-moves 0)
+(loop while (< total-moves 42) do
+	(print board)
+	(format t "~%")
+	(format t "Player 1 Input: ")
+	(player-1-move (human-select))
+	(incf total-moves)
+	(print board)
+	(format t "~%")
+	(format t "Player 2 Input: ")
+	(player-2-move (easy-ai-select))
+	(incf total-moves))
+	;;;(screen:clear-window (screen:make-window))
