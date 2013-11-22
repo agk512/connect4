@@ -28,6 +28,18 @@
     )
 )
 
+;; Returns T if the move is a number in the interval
+;; [0, 6], NIL otherwise.
+(defun is-valid-move (move)
+	(and (numberp move)
+		(>= move 0)
+		(<= move 6)))
+
+;; Returns T if that column is not filled up or
+;; NIL otherwise.
+(defun can-play-move (move)
+	(not (aref board 0 move)))
+
 (defun check-for-winner ()
 
 )
